@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="span">
+	<head>
+		<meta charset="UTF-8">
+		<title>The Offenders</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+        <h1>Retailers</h1>
+
+
+        <form method="post">
+            <input
+              id="retailer_ID_input"
+              type="text"
+              name="retailer_ID"
+              placeholder="retailer_ID" /><input
+              id="name_input"
+              type="text"
+              name="name"
+              placeholder="name" /><input
+              id="address_input"
+              type="text"
+              name="address"
+              placeholder="address" /><input
+              id="phoneNum_input"
+              type="text"
+              name="phoneNum"
+              placeholder="phoneNum" />
+            <input type="submit" value="Search" id="searchButton" />
+        </form>
+
+        <p> </p>
+
+        <div id="tableDiv">{{susStuff}}</div>
+
+	</body>
+	<script src="app.js"></script> 
+</html>
