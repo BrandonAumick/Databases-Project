@@ -8,11 +8,29 @@
 	<body>
         <h1>Thefts</h1>
 
-        <form>
+        <form method="post">
             <input
-              id="name_input"
+              id="theftEvent_ID_input"
               type="text"
-              name="name1" />
+              name="theftEvent_ID"
+              placeholder="theftEvent_ID" /><input
+              id="theftType_input"
+              type="text"
+              name="theftType"
+              placeholder="theftType" /><input
+              id="status_input"
+              type="text"
+              name="status"
+              placeholder="status" />
+              <input
+              id="te_crt_CaseNum_input"
+              type="text"
+              name="te_crt_CaseNum"
+              placeholder="te_crt_CaseNum" /><input
+              id="te_retailer_ID_input"
+              type="text"
+              name="te_retailer_ID"
+              placeholder="te_retailer_ID" />
             <input type="submit" value="Search" id="searchButton" />
         </form>
 
