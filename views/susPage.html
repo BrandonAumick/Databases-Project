@@ -8,13 +8,37 @@
 	<body>
         <h1>Suspects</h1>
 
-        <form>
+
+        <form method="post">
             <input
-              id="name_input"
+              id="person_ID_input"
               type="text"
-              name="name1" />
+              name="person_ID"
+              placeholder="person_ID" /><input
+              id="address_input"
+              type="text"
+              name="address"
+              placeholder="address" /><input
+              id="fName_input"
+              type="text"
+              name="fName"
+              placeholder="fName" /><input
+              id="lName_input"
+              type="text"
+              name="lName"
+              placeholder="lName" /><input
+              id="mInt_input"
+              type="text"
+              name="mInt"
+              placeholder="mInt" /><input
+              id="dlNum_input"
+              type="text"
+              name="dlNum" 
+              placeholder="dlNum"/>
             <input type="submit" value="Search" id="searchButton" />
         </form>
+
+        <p> </p>
 
         <div id="tableDiv">{{susStuff}}</div>
 
