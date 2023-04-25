@@ -27,6 +27,12 @@ async function main() {
     app.set("view engine", "html");
     app.engine('html', hbs.__express);
 
+    dbInfo = {
+        host: "localhost",
+        user: "root",
+        password: "&r!Xfy%te7uD#3UZ6S&C"
+    };
+
     app.listen(3000, function() {
         console.log("Listening on port 3000...");
      });
@@ -57,11 +63,7 @@ async function main() {
 
     app.post('/susPage', async (req, res) => {
 
-        let db = makeDb({
-            host: "localhost",
-            user: "root",
-            password: "&r!Xfy%te7uD#3UZ6S&C"
-        });
+        let db = makeDb(dbInfo);
 
         await db.query('USE `the-offenders`;');
 
@@ -91,11 +93,7 @@ async function main() {
 
     app.post('/theftPage', async (req, res) => {
 
-        let db = makeDb({
-            host: "localhost",
-            user: "root",
-            password: "&r!Xfy%te7uD#3UZ6S&C"
-        });
+        let db = makeDb(dbInfo);
 
         await db.query('USE `the-offenders`;');
 
@@ -125,11 +123,7 @@ async function main() {
 
     app.post('/vehiclePage', async (req, res) => {
 
-        let db = makeDb({
-            host: "localhost",
-            user: "root",
-            password: "&r!Xfy%te7uD#3UZ6S&C"
-        });
+        let db = makeDb(dbInfo);
 
         await db.query('USE `the-offenders`;');
 
@@ -160,11 +154,7 @@ async function main() {
 
     app.post('/retailerPage', async (req, res) => {
 
-        let db = makeDb({
-            host: "localhost",
-            user: "root",
-            password: "&r!Xfy%te7uD#3UZ6S&C"
-        });
+        let db = makeDb(dbInfo);
 
         await db.query('USE `the-offenders`;');
 
@@ -192,8 +182,58 @@ async function main() {
 
     });
 
+    app.get('/susInfo', async (req, res) => {
+
+        let db = makeDb(dbInfo);
+
+        await db.query("USE `the-offenders`;")
+        let person = await db.query(`SELECT fName, mInt, lName FROM subject WHERE person_ID="${req.query.susID}"`);
+        let retailers = await db.query(`SELECT name FROM retailer WHERE retailer_ID IN (SELECT te_retailer_ID FROM \`theft event\` WHERE theftEvent_ID IN (
+                                        SELECT s_theftEvent_ID FROM steals WHERE s_person_ID="${req.query.susID}"))`);
+
+        let vehicles = await db.query(`SELECT color, make, model FROM vehicle WHERE vehicle_ID IN 
+                                        (SELECT vu_vehicle_ID FROM vehicle_used WHERE vu_person_ID="${req.query.susID}");`)
+
+        let retailerString ="";
+        let vehicleString = "";
+
+        for (r of retailers) {
+            retailerString += `${r['name']}\n`;
+        }
+
+        for (v of vehicles) {
+            vehicleString += `${v['color']} ${v['make']} ${v['model']}\n`;
+        }
+
+        res.render('susInfo', {
+            suspectName: `${person[0]['fName']} ${person[0]['mInt']} ${person[0]['lName']}`,
+            stolenRetailers: retailerString,
+            usedVehicles: vehicleString
+        });
+
+    });
+
+    app.get('/retailerInfo', async (req, res) => {
+
+        let db = makeDb(dbInfo);
+
+        await db.query("USE `the-offenders`;")
+        let retailer = await db.query(`SELECT name FROM retailer WHERE retailer_ID="${req.query.retailerID}"`);
+        let subjects = await db.query(`SELECT fName, lName FROM subject, retailer, steals, \`theft event\` WHERE person_ID=s_person_ID AND retailer_ID=te_retailer_ID AND s_theftEvent_ID=theftEvent_ID AND retailer_ID="${req.query.retailerID}";`);
+
+        let subjectString ="";
+
+        for (s of subjects) {
+            subjectString += `${s['fName']} ${s['lName']}\n`;
+        }
+
+        res.render('retailerInfo', {
+            retailerName: retailer[0]['name'],
+            relatedSuspects: subjectString
+        });
+
+    });
+
 }
 
 main();
-
-
