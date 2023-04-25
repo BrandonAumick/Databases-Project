@@ -9,7 +9,10 @@ h2 {
   text-align: center;
 }
 
-body {background-color: black;}
+body {
+  background-color: black;
+  color:rgb(0, 128, 0);
+}
 
 .btn-group button {
     background-color: #04AA6D; /* Green background */
@@ -36,5 +39,14 @@ form {
 #tableDiv {
   color: rgb(0, 128, 0);
   white-space: pre-line;
+  text-align: center;
+}
+
+div {
+  white-space: pre-line;
+  text-align: center;
+}
+
+p {
   text-align: center;
 }
