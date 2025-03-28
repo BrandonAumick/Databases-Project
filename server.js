@@ -30,7 +30,7 @@ async function main() {
     dbInfo = {
         host: "localhost",
         user: "root",
-        password: "&r!Xfy%te7uD#3UZ6S&C"
+        password: ""
     };
 
     app.listen(3000, function() {
